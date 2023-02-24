@@ -153,7 +153,7 @@ Furthermore, we introduce CountBench -- a new text-image counting benchmark for 
     <div id="method" style="border-top:1px solid gray;">
     <h2>Method</h2>
     <center>
-      <img src="images/method_figure.png" style="width:80%;" />
+      <img src="images/method.png" style="width:80%;" />
     </center><br />
     <p>
     Our framework consists of two main stages. (a) We first automatically create a counting training set, comprising of clean and diverse images along with corresponding captions that describe the number of visible objects in the scene. (b) We then leverage this dataset to finetune the VLM model through a designated contrastive loss that is used in tandem with the original generic text-image objective. For the designated contrastive loss, we automatically generate counterfactual examples by swapping the true object count in the caption with a different random number, thus encoraging the model to distinguish between the correct and incorrect counts of objects.
