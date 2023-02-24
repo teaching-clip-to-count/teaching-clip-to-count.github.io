@@ -1,0 +1,229 @@
+<html>
+<head>
+<title>Teaching CLIP to Count to Ten</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@200&display=swap" rel="stylesheet"> 
+<style type="text/css">
+pre {
+    background-color:#eee;
+    border: 1px solid #999;
+    border-radius: 5px;
+    padding: 10px;
+white-space: break-spaces;
+width:80%;
+text-align:left;
+}
+.content {
+    width:930px;
+    text-align: left;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 200;
+}
+h1 {
+    font-weight: 600;
+}
+table.authors {
+    width:90%;
+    text-align:center;
+}
+table.authors > tr > td, table.authors > tbody > tr > td {
+    width:25%;
+}
+.authors a, .lnk {
+    color:black;
+    text-decoration:underline;
+}
+.authors a:hover, .lnk:hover {
+    color:gray;
+    text-decoration:underline;
+}
+.btn {
+    color:black;
+    text-decoration:none;
+}
+.btn:hover {
+    color:gray;
+    text-decoration:none;
+}
+table.demo1 {
+    width:90%;
+    text-align:center;
+}
+.demo1 img {
+    width:100%;
+}
+td.prompt {
+    width:100%;
+    text-align:center;
+    font-family: monospace;
+    font-size:150%;
+}
+td.prompt a {
+    color:#ddd;
+    text-decoration:none;
+}
+td.prompt a:hover, td.prompt a.active {
+    color:black;
+    text-decoration:none;
+}
+.img-stack {
+    position:relative;
+    display: block;
+    width:300px;
+    height:300px;
+}
+.img-stack img {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+}
+.img-stack img.active {
+    z-index: 1;
+}
+.img-stack .overlay {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+    transition: opacity .2s;
+    z-index: 2;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: white;
+}
+</style>
+</head>
+<body dir="ltr">
+<center><div class="content">
+    <center>
+      <h1>Teaching CLIP to Count to Ten</h1>
+      <table class="authors">
+	<tr>
+	  <td><a href="https://scholar.google.com/citations?user=-KSDNZQAAAAJ">Roni Paiss</a></td>
+	  <td><a href="https://scholar.google.com/citations?user=n4dxd1YAAAAJ">Ariel Ephrat</a></td>
+	  <td><a href="https://scholar.google.com/citations?hl=en&user=lbo_R54AAAAJ">Omer Tov</a></td>
+	  <td><a href="https://scholar.google.com/citations?user=I2qheksAAAAJ">Shiran Zada</a></td>
+	</tr>
+	</table>
+	<table class="authors">
+	<tr>
+	  <td><a href="https://research.google/people/InbarMosseri/">Inbar Mosseri</a></td>
+	  <td><a href="http://www.weizmann.ac.il/math/irani/">Michal Irani</a></td>
+	  <td><a href="https://www.weizmann.ac.il/math/dekel/home">Tali Dekel</a></td>
+	</tr>
+
+	</table>
+	<table class="authors"><tr>
+	  <td style="padding-top:20px;"></td>
+	  <td colspan="2" width="50%" style="padding-top:20px;"><center><a href="https://research.google/"><img src="images/google_research.svg" style="height:25px;" /></a></center></td>
+	  <td style="padding-top:20px;"></td>
+	</tr>
+      </table><br />
+      <table class="demo1">
+	<tr>
+	  <td style="width:90%;">
+	    <center><div>
+		<img src="images/teaser.png" />
+	    </div></center>
+	  </td>
+	</tr>
+      </table>
+      <span style="font-size:110%;">We teach a pre-trained VLM model (e.g., CLIP) quantitative textual and visual understanding.</span><br /><br />
+      <b><a href="https://arxiv.org/abs/2302.12066" class="lnk">arXiv</a></b>&nbsp;&nbsp;|&nbsp;&nbsp;<b><a href="https://arxiv.org/pdf/2302.12066.pdf" class="lnk">PDF</a></b>
+    </center>
+    <br />
+    <div id="abstract" style="border-top:1px solid gray;">
+    <h2>Abstract</h2>
+    <p>
+    	Large vision-language models (VLMs), such as CLIP, learn rich joint image-text representations, facilitating advances in numerous downstream tasks, including zero-shot classification and text-to-image generation. Nevertheless, existing VLMs exhibit a prominent well-documented limitation -- they fail to encapsulate compositional concepts such as counting.  
+ We introduce a simple yet effective method to improve the quantitative understanding of VLMs, while maintaining their overall performance on common benchmarks. Specifically, we propose a new counting-contrastive loss used to finetune a pre-trained VLM in tandem with its original objective. Our counting loss is deployed over automatically-created counterfactual examples, each consists of an image and a caption containing an incorrect object count.  For example, an image depicting three dogs along with the caption  ``Six dogs playing in the yard''. Our loss encourages discrimination between the correct caption and its counterfactual variant which serves as a hard negative example. To the best of our knowledge, this work is the first to extend CLIP's capabilities to object counting.
+Furthermore, we introduce CountBench -- a new text-image counting benchmark for evaluating a model's understanding of object counting. We demonstrate a significant improvement over state-of-the-art baseline models on this task. Finally, we leverage our count-aware CLIP model for image retrieval and text-conditioned image generation, demonstrading our model can produce specific counts of objects more reliably than existing ones.
+    </p>
+    </div>
+    <br />
+    <!-- <div id="examples" style="border-top:1px solid gray;">
+    <h2>Additional Examples</h2>
+    <center>
+      <img src="images/results.png" style="width:90%;" />
+    </center>
+    </div>
+    <br /> -->
+    <div id="method" style="border-top:1px solid gray;">
+    <h2>Method</h2>
+    <center>
+      <img src="images/method_figure.png" style="width:80%;" />
+    </center><br />
+    <p>
+    Our framework consists of two main stages. (a) We first automatically create a counting training set, comprising of clean and diverse images along with corresponding captions that describe the number of visible objects in the scene. (b) We then leverage this dataset to finetune the VLM model through a designated contrastive loss that is used in tandem with the original generic text-image objective. For the designated contrastive loss, we automatically generate counterfactual examples by swapping the true object count in the caption with a different random number, thus encoraging the model to distinguish between the correct and incorrect counts of objects.
+	</p>
+    <div id="results" style="border-top:1px solid gray;">
+    <h2>Results</h2>
+    <p>
+    	We evaluate our models and baselines on CountBench on the task of classifying the number of objects in an image in a zero-shot manner. For each image in CountBench we augment the existing caption with eight other possible captions by replacing the number in its caption with all the numbers in {“two”, ... , “ten”}, and calculate the similarity score between the image and each of the nine captions. The number in the caption that obtains highest similarity score with the image is considered the predicted number.
+    	As can be seen in the follwing onfusion matrice, our improved CLIP model is significantly superior to the baseline across all numbers. We provide further evaluations in the paper, including performance on common benchmarks which verifes that the general zero-shot accuracy of the model is preserved.
+    </p>
+     <center><br />
+      <img src="images/confmat.png" style="width:60%;" />
+    </center><br />
+    <!-- <h3>Accuracy</h3> -->
+    <h3>Image Retrieval</h3>
+    <p>
+    	Examplary results of text-to-image retrieval where the text explicitly describes the desired count of objects. As can be seen, when the requested number is larger than three, the images retrieved by the baseline model often depict arbitrary numbers of objects. Additionally, the baseline often retrieves the same images for several different requested numbers. In contrast, our results depict accurate object counts in most cases.
+    </p>
+    <center><br />
+      <img src="images/retrieval_figure.png" style="width:100%;" />
+    </center><br />
+    <h3>Relevancy Maps</h3>
+    <p>
+    	To gain a better understanding of what our model learns, we use an explainability method to visualize the reasoning of the model. displays the relevancy maps of several image-text pairs. Note that the relevancy scores of the text are normalized to sum to 1. Examining the relevancy maps of the text, it is apparent that the relevancy score of the spelled number in the caption is significantly higher than the baseline model, which suggests that our model concentrates more on the mentioned number than the original one. Additionally, examining the relevancy maps of the images, it is evident that our model focuses on all pertinent objects in the image, whereas the original model primarily identifies a single instance of the described object.
+    </p>
+    <center><br />
+      <img src="images/rel.png" style="width:60%;" />
+    </center><br />
+    <h3>Generation downstream Task</h3>
+    <p>
+    	In order to demonstrate the effectiveness of our finetuned model on downstream image generation tasks, we use the textual embeddings of a CLIP-L/14 model finetuned with our method to condition an Imagen model, which is known to fail to reliably produce specific counts of objects. Using our counting-aware CLIP model as backbone we are able to accurately generate requested numbers of objects.
+      </p>
+    <center><br />
+      <img src="images/gen.png" style="width:80%;" />
+    </center><br />
+    </div>
+    <br />
+    <div id="method" style="border-top:1px solid gray;">
+    <h2>CountBench</h2>
+    <p>
+    	We introduce a new object counting benchmark called CountBench, automatically curated (and manually verified) from the publicly available LAION-400M image-text dataset. CountBench contains a total of 540 images containing between two and ten instances of a particular object, where their corresponding captions reflect this number. The Images urls and their corresponding captions can be found 
+    	<a href="https://github.com/teaching-clip-to-count/teaching-clip-to-count.github.io/blob/main/CountBench.json">here</a>.
+    </p>
+    <center><br />
+      <img src="images/countbench.png" style="width:80%;" />
+    </center><br />
+    </div>
+    <br />
+    <div id="paper" style="border-top:1px solid gray;">
+    <h2>Paper</h2>
+    <table><tr>
+	<td valign="middle"><img src="images/paper.png" style="width:200px;" /></td>
+	<td valign="top">
+	  <b>"Teaching CLIP to Count to Ten"</b>,<br /><br/>
+	  Roni Paiss, Ariel Ephrat, Omer Tov, Shiran Zada, Inbar Mosseri, 
+      Michal Irani and Tali Dekel.<br /><br />
+	  <b>[</b><a href="https://arxiv.org/pdf/2302.12066.pdf" class="lnk">PDF</a><b>]</b>
+	</td>
+    </tr></table>
+    </div><br />
+    <div id="bibtex" style="border-top:1px solid gray;">
+    <h2>BibTeX</h2>
+    <center><pre><code>@article{paiss2023countclip,
+      title={Teaching CLIP to Count to Ten}, 
+      author={Paiss, Roni and Ephrat, Ariel and Tov, Omer and Zada, Shiran and Mosseri, Inbar and Irani, Michal and Dekel, Tali},
+      year={2023},
+      journal={arXiv preprint arXiv:2302.12066}
+}</code></pre></center>
+    </div>
+</div></center>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>
